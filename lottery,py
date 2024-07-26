@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+
+import random
+
+
+def generate_winning_numbers():
+    """Generate a set of 3 unique winning numbers between 0 and 9."""
+    return random.sample(range(10), 3)
+
+
+def get_user_input():
+    """Get 3 unique numbers from the user."""
+    while True:
+        try:
+            user_numbers = input("Enter 3 unique numbers between 0 and 9 (comma-separated): ")
+            user_numbers = [int(num) for num in user_numbers.split(",")]
+            if len(user_numbers) != 3 or len(set(user_numbers)) != 3:
+                raise ValueError
+            if any(num < 0 or num > 9 for num in user_numbers):
+                raise ValueError
+            return user_numbers
+        except ValueError:
+            print("Invalid input. Please enter 3 unique numbers between 0 and 9.")
+
+
+def check_winning(user_numbers, winning_numbers):
+    """Check if the user's numbers match the winning numbers."""
+    return set(user_numbers) == set(winning_numbers)
+
+
+def main():
+    winning_numbers = generate_winning_numbers()
+    user_numbers = get_user_input()
+    if check_winning(user_numbers, winning_numbers):
+        print("Congratulations! You've won!")
+    else:
+        print(f"Sorry, you didn't win. The winning numbers were: {winning_numbers}")
+
+
+if __name__ == "__main__":
+    main()
